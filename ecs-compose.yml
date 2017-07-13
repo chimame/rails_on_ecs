@@ -12,6 +12,10 @@ rails:
     - DATABASE_HOST=db
     - DATABASE_USERNAME=postgres
     - DATABASE_PASSWORD=""
+  log_driver: awslogs
+  log_opt:
+    awslogs-group: "compose-test-web-logs"
+    awslogs-region: "ap-northeast-1"
 db:
   image: postgres:9.6-alpine
   mem_limit: 268435456
@@ -19,3 +23,7 @@ db:
     - /var/lib/postgresql/data
   ports:
     - "5432:5432"
+  log_driver: awslogs
+  log_opt:
+    awslogs-group: "compose-test-db-logs"
+    awslogs-region: "ap-northeast-1"
