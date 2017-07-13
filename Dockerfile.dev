@@ -1,0 +1,14 @@
+FROM ruby:2.4-alpine
+
+RUN apk update && apk upgrade && apk add --no-cache tzdata postgresql-dev nodejs postgresql-client
+
+RUN mkdir /app
+WORKDIR /app
+
+ADD Gemfile /app/Gemfile
+ADD Gemfile.lock /app/Gemfile.lock
+RUN apk --virtual .bundle-builddeps alpine-sdk \
+ && bundle install -j4 \
+ && apk del .bundle-builddeps
+
+ADD . /app
